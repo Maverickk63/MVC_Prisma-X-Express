@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>User Form</h1>
+
+    <form id="userForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="matricula">Matrícula:</label>
+        <input type="number" id="matricula" name="matricula" required>
+
+        <label for="tipoUsuario">Tipo de Usuário:</label>
+        <input type="number" id="tipoUsuario" name="tipoUsuario" required>
+
+        <button type="button" onclick="submitData()">Criar User</button>
+        
+    </form>
+
+    <script>
+        async function submitData() {
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const matricula = parseInt(document.getElementById('matricula').value, 10);
+            const tipoUsuario = parseInt(document.getElementById('tipoUsuario').value, 10);
+
+            const formData = {
+                nome,
+                email,
+                matricula,
+                tipoUsuario,
+            };
+
+            try {
+                const response = await fetch('/user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const result = await response.json();
+                console.log('Response:', result);
+                // Adicione aqui qualquer manipulação adicional da resposta
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

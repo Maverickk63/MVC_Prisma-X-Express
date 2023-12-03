@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Grupo Form</h1>
+
+    <form id="grupoForm">
+        <label for="nome">Nome do Grupo:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="liderNome">Nome do Líder:</label>
+        <input type="text" id="liderNome" name="liderNome" required>
+
+        <label for="estande">Estande:</label>
+        <input type="text" id="estande" name="estande" required>
+
+        <label for="diaApresentacao">Dia de Apresentação:</label>
+        <input type="text" id="diaApresentacao" name="diaApresentacao" placeholder="2023-12-01 14:30:00" required>
+
+        <button type="button" onclick="submitData()">Criar Grupo</button>
+    </form>
+
+    <script>
+        async function submitData() {
+            const nome = document.getElementById('nome').value;
+            const liderNome = document.getElementById('liderNome').value;
+            const estande = document.getElementById('estande').value;
+            const diaApresentacao = document.getElementById('diaApresentacao').value;
+
+            const formData = {
+                nome,
+                liderNome,
+                estande,
+                diaApresentacao,
+            };
+
+            try {
+                const response = await fetch('/grupo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const result = await response.json();
+                console.log('Response:', result);
+                // Adicione aqui qualquer manipulação adicional da resposta
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

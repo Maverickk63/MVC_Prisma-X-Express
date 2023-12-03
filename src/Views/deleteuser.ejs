@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Delete User</h1>
+
+    <form id="userForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <button type="button" onclick="submitData()">Delete User</button>
+        
+    </form>
+
+    <script>
+        async function submitData() {
+            const id = document.getElementById('nome').value;
+
+            const formData = {
+                id
+            };
+
+            try {
+                const response = await fetch('/user', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const result = await response.json();
+                console.log('Response:', result);
+                // Adicione aqui qualquer manipulação adicional da resposta
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>

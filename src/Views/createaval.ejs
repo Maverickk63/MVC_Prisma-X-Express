@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Avaliação Form</h1>
+
+    <form id="avaliacaoForm">
+        <label for="nota">Nota:</label>
+        <input type="text" id="nota" name="nota" required>
+
+        <label for="usuarioId">ID do Usuário:</label>
+        <input type="text" id="usuarioId" name="usuarioId" required>
+
+        <label for="grupoId">ID do Grupo:</label>
+        <input type="text" id="grupoId" name="grupoId" required>
+
+        <button type="button" onclick="submitData()">Criar Avaliação</button>
+    </form>
+
+    <script>
+        async function submitData() {
+            const nota = document.getElementById('nota').value;
+            const usuarioId = document.getElementById('usuarioId').value;
+            const grupoId = document.getElementById('grupoId').value;
+
+            const formData = {
+                nota,
+                usuarioId,
+                grupoId,
+            };
+
+            try {
+                const response = await fetch('/aval', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const result = await response.json();
+                console.log('Response:', result);
+                // Adicione aqui qualquer manipulação adicional da resposta
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
